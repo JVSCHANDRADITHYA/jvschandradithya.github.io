@@ -17,6 +17,34 @@
 
 
   <style>
+    /* Base glass card */
+.glass-tile {
+  background: rgba(10, 20, 40, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(100, 150, 255, 0.18);
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Hover effect (important) */
+.glass-tile:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: rgba(34, 211, 238, 0.45);
+  box-shadow:
+    0 14px 45px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(34, 211, 238, 0.25);
+}
+
     /* fade-in-up replacement for Framer Motion */
     .fade-up {
       opacity: 0;
@@ -79,7 +107,7 @@
         CHANDRADITHYA
       </div>
       <div class="flex items-center space-x-8">
-        
+
 <a
   href="https://linkedin.com/in/adithya-jvsc"
   target="_blank"
@@ -172,7 +200,8 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <div class="bg-black/60 border border-blue-900/40 rounded-xl p-6">
+    <div class="glass-tile p-6">
+
       <h3 class="text-xl font-bold text-cyan-300 mb-4">Languages</h3>
       <div class="flex flex-wrap gap-2">
         <span class="px-3 py-1 bg-blue-900/30 rounded-full text-sm">C</span>
@@ -185,7 +214,8 @@
       </div>
     </div>
 
-    <div class="bg-black/60 border border-blue-900/40 rounded-xl p-6">
+    <div class="glass-tile p-6">
+
       <h3 class="text-xl font-bold text-cyan-300 mb-4">Frameworks</h3>
       <div class="flex flex-wrap gap-2">
         <span class="px-3 py-1 bg-blue-900/30 rounded-full text-sm">Spring Boot</span>
@@ -198,7 +228,8 @@
       </div>
     </div>
 
-    <div class="bg-black/60 border border-blue-900/40 rounded-xl p-6">
+    <div class="glass-tile p-6">
+
       <h3 class="text-xl font-bold text-cyan-300 mb-4">Cloud & Systems</h3>
       <div class="flex flex-wrap gap-2">
         <span class="px-3 py-1 bg-blue-900/30 rounded-full text-sm">AWS (EC2, S3)</span>
@@ -212,7 +243,8 @@
       </div>
     </div>
 
-    <div class="bg-black/60 border border-blue-900/40 rounded-xl p-6">
+    <div class="glass-tile p-6">
+
       <h3 class="text-xl font-bold text-cyan-300 mb-4">AI & Data</h3>
       <div class="flex flex-wrap gap-2">
         <span class="px-3 py-1 bg-blue-900/30 rounded-full text-sm">LLMs</span>
