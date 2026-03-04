@@ -579,6 +579,23 @@
       .contact-inner { padding: 48px 28px; }
       .github-stats { gap: 20px; }
     }
+    .avatar-ring-wrap {
+      position: relative;
+      width: 240px; height: 240px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ring-text {
+      position: absolute; inset: 0;
+      width: 240px; height: 240px;
+      z-index: 2; pointer-events: none;
+      /* no animation */
+    }
+    .avatar-ring-wrap .hero-avatar {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 174px; height: 174px;
+    }
   </style>
 </head>
 <body>
@@ -639,11 +656,21 @@
 
           <!-- Profile image -->
           <div class="hero-image-wrap fade-in" style="transition-delay:0.4s">
-            <!--
-              Replace the div below with:
-              <img src="your-photo.jpg" alt="Chandradithya" class="hero-avatar">
-            -->
-            <img src="tesseract.png" alt="Chandradithya" class="hero-avatar">
+            <div class="avatar-ring-wrap">
+              <svg class="ring-text" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <path id="circle"
+                      d="M 120,120 m -108,0 a 108,108 0 1,1 216,0 a 108,108 0 1,1 -216,0"/>
+                  </defs>
+                  <text font-family="'DM Mono', monospace" font-size="8.5"
+                        fill="rgba(76,201,255,0.4)" letter-spacing="1">
+                    <textPath href="#circle">
+                      Well, the fifth dimension's a tesseract
+                    </textPath>
+                  </text>
+                </svg>
+              <img src="tesseract.png" alt="Chandradithya" class="hero-avatar">
+            </div>
             <div class="hero-image-meta">
               <b>Chandradithya</b>
               SDE & Agents · CS · '26<br>
