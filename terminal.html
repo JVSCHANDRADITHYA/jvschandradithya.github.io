@@ -127,6 +127,12 @@ html, body {
 .cmd-btn.active { color:var(--green); background:rgba(52,211,153,.08); border-left:2px solid var(--green); padding-left:calc(.6rem - 2px); }
 .cmd-btn.active::before { color:var(--green); }
 
+.cmd-btn.danger { color: rgba(255,92,124,0.6); }
+.cmd-btn.danger::before { color: rgba(255,92,124,0.35); }
+.cmd-btn.danger:hover { color: var(--red); background: rgba(255,92,124,0.06); }
+.cmd-btn.danger:hover::before { color: var(--red); }
+.cmd-btn.danger.active { color: var(--red); background: rgba(255,92,124,0.08); border-left-color: var(--red); }
+
 .sb-divider { height:1px; background:var(--border); margin:.5rem .8rem; }
 .sb-info { padding:.5rem .8rem; font-size:.55rem; color:var(--muted); line-height:1.8; }
 .sb-info b { color:var(--green); }
@@ -200,7 +206,7 @@ html, body {
   display: block;
 }
 .t-line.prompt { color:var(--green); }
-.t-line.prompt::before { content:'adithya@stack_core:~$ '; }
+.t-line.prompt::before { content:'peagasus@core:~$ '; }
 .t-line.comment { color:var(--muted); font-style:italic; }
 .t-line.heading { color:var(--green); font-weight:700; font-size:.8rem; margin:.6rem 0 .2rem; }
 .t-line.subheading { color:var(--amber); font-size:.68rem; margin:.4rem 0 .1rem; }
@@ -345,6 +351,7 @@ html, body {
       <button class="cmd-btn" data-cmd="./open-source">./open-source</button>
       <button class="cmd-btn" data-cmd="cat about.txt">cat about.txt</button>
       <button class="cmd-btn" data-cmd="cat contact.txt">cat contact.txt</button>
+      <button class="cmd-btn danger" data-cmd="sudo">sudo</button>
       <button class="cmd-btn" data-cmd="help">help</button>
     </div>
     <div class="sb-divider"></div>
@@ -601,6 +608,115 @@ const LOGOS = {
 /* ── COMMANDS ── */
 const COMMANDS = {
 
+  'sudo': async()=>{
+    if (window._sudoGranted) {  
+      await addBlank();
+      await addLine('<span style="color:var(--green)">sudo: already have root access. What more do you want?</span>');
+      return;
+    }
+    await addBlank();
+    await addLine('<span style="color:var(--muted)">[sudo] password for adithya: Type it below</span>');
+    await addLine('<span style="color:var(--dim)">hint: it\'s closer than you think. I guess <b>you</b> are the password</span>', 'comment');
+    await addLine('Ctrl+C to cancel.', 'comment');
+    await sleep(400);
+    passwordMode = true;
+    passwordAttempts = 0;
+    input.type = 'password';
+    input.placeholder = 'enter password...';
+    busy = false;  // ← must release before returning so input works
+    input.focus({ preventScroll: true });
+    // don't await anything after — return immediately
+  },
+
+  'rm -rf': async()=>{
+    await addBlank();
+    await addLine('executing rm -rf /*', 'comment');
+    await sleep(300);
+    const logs = [
+      'rm: descending into /',
+      'rm: descending into /home/adithya',
+      'rm: removing /projects/everything',
+      'rm: removing /memories/good-ones',
+      'rm: removing /sanity',
+      'rm: removing /will-to-live',
+    ];
+    for(const l of logs){ await addLine(l, 'comment'); await sleep(120); }
+    await addLine('<span style="color:var(--red)">rm: removed 2,847 files. all of them. congrats.</span>');
+    await sleep(700);
+
+    for(let i=0;i<8;i++){ term.style.opacity=i%2===0?'0.1':'1'; await sleep(60); }
+    term.style.opacity='1';
+    await sleep(400);
+
+    // destroy the UI
+    document.getElementById('sidebar').style.transition = 'opacity 0.6s';
+    document.getElementById('sidebar').style.opacity = '0';
+    document.getElementById('topbar').style.transition = 'opacity 0.6s';
+    document.getElementById('topbar').style.opacity = '0';
+    document.getElementById('statusbar').style.transition = 'opacity 0.6s';
+    document.getElementById('statusbar').style.opacity = '0';
+    await sleep(700);
+    document.getElementById('sidebar').style.display = 'none';
+    document.getElementById('topbar').style.display = 'none';
+    document.getElementById('statusbar').style.display = 'none';
+
+    // expand terminal to full screen
+    document.getElementById('os').style.gridTemplateColumns = '1fr';
+    document.getElementById('os').style.gridTemplateRows = '1fr auto';
+    document.querySelectorAll('.cmd-btn').forEach(b => b.disabled = true);  
+    window._destroyed = true;
+    window._sudoGranted = false;  // ← add this — revoke after use
+
+    term.innerHTML='';
+    await addBlank();
+    await typeText("What made you think that was a good idea? Because I said so?", 'err', 28);
+    await sleep(700);
+    await typeText("Now everything is ruined.", 'err', 32);
+    await sleep(500);
+    await addBlank();
+    await addLine('<span style="color:var(--dim)">messiah@pegasus-core:$ ~ help</span>');
+    await sleep(400);
+    await addLine('maybe restarting your browser will fix this.', 'comment');
+    await sleep(600);
+    await addLine('<span style="color:var(--dim)">...or maybe typing <b>save</b> might help. just a thought.</span>');
+    await addBlank();
+    hintEl.textContent = '// system compromised — only: save';
+  },
+
+  'save': async()=>{
+    term.innerHTML='';
+    await addBlank();
+    await addLine('attempting recovery...', 'comment');
+    await sleep(500);
+    const restores = ['/sanity', '/memories/good-ones', '/projects/everything', '/will-to-live'];
+    for(const r of restores){
+      await addLine(`restoring ${r} ... <span style="color:#22c55e">ok</span>`, 'comment');
+      await sleep(300);
+    }
+    await sleep(200);
+
+    // restore UI
+    document.getElementById('topbar').style.display = '';
+    document.getElementById('sidebar').style.display = '';
+    document.getElementById('statusbar').style.display = '';
+    await sleep(100);
+    document.getElementById('topbar').style.opacity = '1';
+    document.getElementById('sidebar').style.opacity = '1';
+    document.getElementById('statusbar').style.opacity = '1';
+    document.getElementById('os').style.gridTemplateColumns = '';
+    document.getElementById('os').style.gridTemplateRows = '';
+    document.querySelectorAll('.cmd-btn').forEach(b => b.disabled = false);
+    tauntIdx = 0;
+    window._destroyed = false;
+
+    await addLine('<span style="color:#22c55e">system restored. all 2,847 files recovered.</span>');
+    await sleep(400);
+    await addLine('<span style="color:#9b8b8b"> Congratulations! You unlocked the Easter Egg!</span>', 'comment');
+    await addLine('Thanks for trying it out!!', 'comment');
+    await addBlank();
+    hintEl.textContent = '// type a command below or click sidebar  ·  tab to autocomplete  ·  ↑↓ history';
+  },
+
   'whoami': async()=>{ 
     term.innerHTML='';
     await addBlank();
@@ -630,18 +746,18 @@ const COMMANDS = {
     // midpoint of "I am the one who codes." at 22ms/char = ~260ms
     setTimeout(()=>{ bg.style.opacity='0.045'; }, 260);
 
-    await typeText("I am the one who codes.", '', 22);
+    await typeText("I am not the one who types, Skyler. I am the one who codes", '', 22);
 
     // fade out after 8s
     setTimeout(()=>{ bg.style.transition='opacity 3s ease'; bg.style.opacity='0'; }, 8500);
     setTimeout(()=>{ bg.remove(); }, 11000);
 
     await sleep(600);
-    await typeText("Say my name.", '', 100);
-    await sleep(600);
-    await typeText("Chandradithya Janaswami", 'heading', 100); // continue on same line by putting ... after it
-    await sleep(400);
-    await typeText("You're goddamn right.", '', 100);
+    await typeText("Now... Say my name.", '', 75);
+    await sleep(500);
+    await typeText("Chandradithya Janaswami", 'heading', 50); // continue on same line by putting ... after it
+    await sleep(300);
+    await typeText("You're goddamn right.", '', 80);
     await sleep(400);
     await addBlank();
     await addLine('Strong CS fundamentals — DSA, systems, cloud infra — backed by production engineering at <b>Emerson</b> and applied research under <b>DRDO-IRDE</b>. I work across the full stack: from <b>Rust low-latency services</b> to <b>Kubernetes cluster orchestration</b> to <b>LLM-powered agents</b>. Looking for SDE, AI/ML, and systems engineering roles.');
@@ -895,6 +1011,14 @@ const COMMANDS = {
       term.scrollTop=term.scrollHeight;
       await sleep(40);
     }
+    await sleep(40);
+    const sudoEl = document.createElement('div');
+    sudoEl.className = 't-line';
+    sudoEl.style.cssText = 'display:flex;gap:1rem;';
+    sudoEl.innerHTML = `<span style="color:var(--red);font-size:.65rem;width:160px;flex-shrink:0;">$ sudo</span><span style="color:var(--muted);font-size:.63rem;">???  <span style="color:var(--dim)">// you definitely wanna try this</span></span>`;
+    term.appendChild(sudoEl);
+    term.scrollTop = term.scrollHeight;
+    await sleep(40);
     await addBlank();
   },
 
@@ -962,13 +1086,52 @@ const ALIASES = {
   'oss':         './open-source',
   'opensource':  './open-source',
 };
-
+let tauntIdx = 0;
 async function runCommand(cmd, silent=false){
   const trimmed = cmd.trim();
   if(!trimmed) return;
   if(busy) return;
   busy=true;
 
+  // ── DESTROYED STATE — only save works ──
+  if(window._destroyed && trimmed.toLowerCase() !== 'save'){
+    const taunts = [
+      'lol. nothing works.',
+      'still broken. try save.',
+      'bro. SAVE.',
+      'you caused this. only you can save this.',
+      'interesting strategy. not working though.',
+      's-a-v-e. four letters.',
+      'the audacity to keep trying other commands.',
+      'this is not how computers work. or is it.',
+      'i admire the persistence. i really do.',
+    ];
+    await addLine(`<span style="color:var(--dim)">${taunts[tauntIdx % taunts.length]}</span>`);
+    tauntIdx++;
+    await addBlank();
+    document.getElementById('sb-cmd').textContent = 'DESTROYED';
+    busy = false;
+    return;
+  }
+
+    // rm -rf only if sudo granted
+  if(trimmed.toLowerCase() === 'rm -rf' && !window._sudoGranted){
+    if(!silent) await addPrompt(trimmed);
+    await addLine('permission denied. try <b>sudo</b> first.', 'err');
+    await addBlank();
+    busy = false;
+    return;
+  }
+
+  // save only if destroyed
+  if(trimmed.toLowerCase() === 'save' && !window._destroyed){
+    if(!silent) await addPrompt(trimmed);
+    await addLine('nothing to save. system is fine.', 'comment');
+    await addBlank();
+    busy = false;
+    return;
+  }
+  
   const resolved = ALIASES[trimmed.toLowerCase()] ?? trimmed;
 
   document.getElementById('sb-cmd').textContent=trimmed.toUpperCase();
@@ -1001,20 +1164,82 @@ const input = document.getElementById('cmd-input');
 const hintEl = document.getElementById('hint');
 const cmdList = Object.keys(COMMANDS);
 let history=[], histIdx=-1;
+let passwordMode = false;
+let passwordAttempts = 0;
+window._sudoGranted = false;
+window._destroyed = false;
 
 document.querySelectorAll('.cmd-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{ if(!busy){ input.focus(); runCommand(btn.dataset.cmd); } });
 });
 
-const allCmds = [...Object.keys(COMMANDS), ...Object.keys(ALIASES)];
+const allCmds = [...Object.keys(COMMANDS), ...Object.keys(ALIASES), 'sudo', 'rm -rf', 'save'];
 
 input.addEventListener('keydown', async(e)=>{
+
+  // Ctrl+C — abort sudo
+  if(e.ctrlKey && e.key === 'c'){
+    if(passwordMode){
+      e.preventDefault();
+      passwordMode = false;
+      passwordAttempts = 0;
+      input.type = 'text';
+      input.placeholder = 'type a command...';
+      input.value = '';
+      await addLine('^C', 'comment');
+      await addLine('sudo: aborted.', 'err');
+      await addBlank();
+      busy = false;
+    }
+    return;
+  }
   if(e.key==='Enter'){
-    const val=input.value.trim();
-    histIdx=-1;
-    if(val){ history.unshift(val); if(history.length>50)history.pop(); }
-    input.value='';
-    hintEl.textContent='// type a command below or click sidebar  ·  tab to autocomplete  ·  ↑↓ history';
+    const val = input.value.trim();
+    histIdx = -1;
+
+    if(passwordMode){
+      const attempt = val;
+      input.value = '';
+      input.type = 'text';
+      input.placeholder = 'type a command...';
+
+      await addPrompt('*'.repeat(attempt.length || 1));
+
+      if(attempt.toLowerCase() === 'you'){
+        passwordMode = false;
+        passwordAttempts = 0;
+        window._sudoGranted = true;
+        await sleep(300);
+        await addLine('<span style="color:#22c55e">PERMISSION GRANTED.</span>');
+        await sleep(400);
+        await addLine('welcome. try <span style="color:var(--red)">rm -rf</span> — you\'ve earned it.', 'comment');
+        await addBlank();
+      } else {
+        passwordAttempts++;
+        const hints = [
+          'nope.',
+          'still no.',
+          'not even close.',
+          'hint: it\'s a pronoun.',
+          'hint: it\'s what you call others.',
+          'hint: rhymes with "blue".',
+          'hint: second person singular. one word.',
+          'ok i\'ll just spell it out — the password is literally <b>you</b>.',
+        ];
+        await addLine(`<span style="color:var(--red)">incorrect password (attempt ${passwordAttempts})</span>`);
+        await addLine(`<span style="color:var(--dim)">${hints[Math.min(passwordAttempts-1, hints.length-1)]}</span>`);
+        await addBlank();
+        input.type = 'password';
+        input.placeholder = 'try again...';
+      }
+      input.focus({ preventScroll: true });
+      return;
+      // if destroyed, only allow save
+    }
+
+    if(val){ history.unshift(val); if(history.length>50) history.pop(); }
+    input.value = '';
+    hintEl.textContent = '// type a command below or click sidebar  ·  tab to autocomplete  ·  ↑↓ history';
     await runCommand(val);
     input.focus();
   } else if(e.key==='ArrowUp'){
