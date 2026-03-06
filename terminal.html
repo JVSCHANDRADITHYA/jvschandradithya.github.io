@@ -616,7 +616,7 @@ const COMMANDS = {
     }
     await addBlank();
     await addLine('<span style="color:var(--muted)">[sudo] password for adithya: Type it below</span>');
-    await addLine('<span style="color:var(--dim)">hint: it\'s closer than you think. I guess <b>you</b> are the password</span>', 'comment');
+    await addLine('<span style="color:var(--dim)">hint: <b>you</b> already know it.</span>', 'comment');
     await addLine('Ctrl+C to cancel.', 'comment');
     await sleep(400);
     passwordMode = true;
@@ -678,7 +678,7 @@ const COMMANDS = {
     await sleep(400);
     await addLine('maybe restarting your browser will fix this.', 'comment');
     await sleep(600);
-    await addLine('<span style="color:var(--dim)">...or maybe typing <b>save</b> might help. just a thought.</span>');
+    await addLine('<span style="color:var(--dim)">...or maybe you can <b>save</b> this wihtout a restart. just a thought.</span>');
     await addBlank();
     hintEl.textContent = '// system compromised — only: save';
   },
