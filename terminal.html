@@ -21,6 +21,7 @@
   --red:     #ff3355;
   --blue:    #5b8fff;
   --green:   #39d98a;
+  --dim_1: #1c5c85; 
 
   --text:    #e4e0d8;
   --muted:   #5a5650;
@@ -1115,16 +1116,21 @@ const COMMANDS = {
     await typeText('2,847 processes terminated.','err',25);
     await sleep(400);
     await typeText('/proc/self/status → NOT FOUND','err',20);
+
+    await addBlank();
     await sleep(700);
+    await typeText("What made you think that was a good idea? Because I said so?", 'err', 28);
+    await sleep(700);
+    await typeText("Now everything is ruined.", 'err', 32);
+    await sleep(500);
     await addBlank();
-    await typeText('you did this.','comment',60);
+    await addLine('<span style="color:var(--dim_1)">messiah@pegasus-core:$ ~ help</span>');
+    await sleep(400);
+    await addLine('maybe restarting your browser will fix this.', 'comment');
     await sleep(600);
+    await addLine('<span style="color:var(--dim_1)">...or maybe you can <b>save</b> this wihtout a restart. just a thought.</span>');
     await addBlank();
-    await addLine('╔─────────────────────────────────╗','comment');
-    await addLine('│  one command remains: <span style="color:#ff3355;font-weight:700">save</span>        │','comment');
-    await addLine('╚─────────────────────────────────╝','comment');
-    await addBlank();
-    hintEl.textContent = '// system destroyed — type: save';
+    hintEl.textContent = '// system compromised — only: save';
   },
 
   'save': async()=>{
@@ -1591,7 +1597,7 @@ async function runCommand(cmd, silent=false){
       'this is not how computers work. or is it.',
       'i admire the persistence. i really do.',
     ];
-    await addLine(`<span style="color:var(--dim)">${taunts[tauntIdx % taunts.length]}</span>`);
+    await addLine(`<span style="color:var(--text)">${taunts[tauntIdx % taunts.length]}</span>`);
     tauntIdx++;
     await addBlank();
     document.getElementById('sb-cmd').textContent = 'DESTROYED'; const sc2c=document.getElementById('sb-cmd2'); if(sc2c) sc2c.textContent='DESTROYED';
