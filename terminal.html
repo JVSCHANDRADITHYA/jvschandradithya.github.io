@@ -72,7 +72,7 @@ body:has(a:hover) #cur-r {
   width:32px; height:32px;
   border-color: rgba(255,107,53,.9);
 }
-canvas#neural { display:none; }
+
 
 /* ══════════════════════════════════════════
    BOOT
@@ -685,7 +685,7 @@ canvas#neural { display:none; }
 
 <div id="cur"></div>
 <div id="cur-r"></div>
-<canvas id="neural" style="display:none"></canvas>
+<!-- <canvas id="neural" style="display:none"></canvas> -->
 
 <!-- AUTH OVERLAY -->
 <div id="auth-overlay">
@@ -834,7 +834,6 @@ document.querySelectorAll('button,a').forEach(el=>{
 /* ═══════════════════════════════════════════════
    NEURAL CANVAS
 ═══════════════════════════════════════════════ */
-document.getElementById('neural').style.display='none';
 
 /* ═══════════════════════════════════════════════
    CLOCK & UPTIME
