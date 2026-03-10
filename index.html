@@ -1094,12 +1094,12 @@
           edges.push([i,j]);
 
     let t = 0;
-    let speed = 0.005;
-    let targetSpeed = 0.005;
+    let speed = 0.003;
+    let targetSpeed = 0.003;
     let animRunning = true;
 
-    canvas.addEventListener('mouseenter', () => targetSpeed = 0.0003);
-    canvas.addEventListener('mouseleave', () => targetSpeed = 0.005);
+    canvas.addEventListener('mouseenter', () => targetSpeed = 0.0008);
+    canvas.addEventListener('mouseleave', () => targetSpeed = 0.003);
 
     const observer = new IntersectionObserver((entries) => {
       animRunning = entries[0].isIntersecting;
