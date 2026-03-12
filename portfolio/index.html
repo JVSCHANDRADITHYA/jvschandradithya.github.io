@@ -98,9 +98,9 @@
       flex-shrink: 0
     }
 
-    .nav-logo:hover { text-shadow: var(--amber) 0px 0px 8px; transition: text-shadow 0.1s ease; }
+    .nav-logo:hover { text-shadow: #22d3ee 1px 1px 8px; transition: text-shadow 0.1s ease; }
     
-    .nav-logo .dot { color: var(--accent); text-shadow: var(--glow); }
+    .nav-logo .dot { color: var(--accent); text-shadow: #dbdbdb 1px 1px 8px;  }
 
     .nav-center {
       display: flex; align-items: center; gap: 2px; list-style: none;
@@ -196,8 +196,8 @@
     }
     .hero-tag::before {
       content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); box-shadow: var(--glow);
-      animation: pulse 2s ease infinite;
+      background: #b9e1b9; box-shadow: var(--glow);
+      animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
@@ -696,7 +696,7 @@
             <div class="hero-image-meta">
               <b>Chandradithya</b>
               SDE & Agents · CS · '26<br>
-              Hyderabad, IN
+              INDIA
             </div>
           </div>
         </div>
@@ -762,11 +762,12 @@
             <div class="skill-pills">
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="">Spring Boot</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="">React</span>
-              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg" alt="">Svelte</span>
+              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="">Next.js</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" alt="">Express</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" alt="">FastAPI</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg" alt="">Kafka</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="">PyTorch</span>
+              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" alt="">Wordpress</span>
             </div>
           </div>
           <div class="skill-group">
@@ -778,17 +779,21 @@
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" alt="">Grafana</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg" alt="">Terraform</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg" alt="">GraphQL</span>
+              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg" alt="">Cloudflare</span>
             </div>
           </div>
           <div class="skill-group">
             <div class="skill-group-name">AI &amp; Data</div>
             <div class="skill-pills">
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="">LangChain</span>
+              <span class="skill-pill"><img src="public/langgraph.png" alt="">LangGraph</span>
+              <span class="skill-pill"><img src="public/ollama.webp" alt="">Ollama</span>
+              <span class="skill-pill"><img src="public/claude.png" alt="">Claude</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="">MySQL</span>
-              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mariadb/mariadb-original.svg" alt="">MariaDB</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="">MongoDB</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" alt="">Redis</span>
               <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="">PostgreSQL</span>
+              <span class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cassandra/cassandra-original.svg" alt="">Cassandra</span>
             </div>
           </div>
         </div>
@@ -1069,7 +1074,7 @@
 
   <footer>
     <span class="footer-name">V S Chandradithya Janaswami</span>
-    <span class="footer-copy">© 2026 · Hyderabad</span>
+    <span class="footer-copy">© 2026 · v-1.0.0</span>
   </footer>
 
   <script>
@@ -1105,12 +1110,12 @@
           edges.push([i,j]);
 
     let t = 0;
-    let speed = 0.003;
-    let targetSpeed = 0.003;
+    let speed = 0.006;
+    let targetSpeed = 0.006;
     let animRunning = true;
 
     canvas.addEventListener('mouseenter', () => targetSpeed = 0.0008);
-    canvas.addEventListener('mouseleave', () => targetSpeed = 0.003);
+    canvas.addEventListener('mouseleave', () => targetSpeed = 0.006);
 
     const observer = new IntersectionObserver((entries) => {
       animRunning = entries[0].isIntersecting;
