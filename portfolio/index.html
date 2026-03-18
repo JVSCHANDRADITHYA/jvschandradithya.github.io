@@ -508,6 +508,215 @@
     .oss-pr { font-size: 11px; color: var(--violet); margin-bottom: 8px; font-family: 'DM Mono', monospace; }
     .oss-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
+    /* ── WRITING MOSAIC ── */
+    .mosaic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .mosaic-card {
+      position: relative;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid var(--border);
+      background: rgba(8,19,33,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color .25s, background .25s, transform .25s;
+    }
+    .mosaic-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* per-card accent colors */
+    .mosaic-card.mc-a {
+      border-color: rgba(76,201,255,0.15);
+      --card-accent: #4cc9ff;
+    }
+    .mosaic-card.mc-a:hover { border-color: rgba(76,201,255,0.4); }
+
+    .mosaic-card.mc-b {
+      border-color: rgba(255,209,102,0.15);
+      --card-accent: #ffd166;
+    }
+    .mosaic-card.mc-b:hover { border-color: rgba(255,209,102,0.4); }
+
+    .mosaic-card.mc-c {
+      border-color: rgba(255,69,0,0.15);
+      --card-accent: #ff4500;
+    }
+    .mosaic-card.mc-c:hover { border-color: rgba(255,69,0,0.4); }
+
+    .mosaic-card.mc-d {
+      border-color: rgba(10,149,200,0.15);
+      --card-accent: #0a95c8;
+    }
+    .mosaic-card.mc-d:hover { border-color: rgba(10,149,200,0.4); }
+
+    .mosaic-card.mc-e {
+      border-color: rgba(10,149,200,0.15);
+      --card-accent: #0a95c8;
+      justify-content: center;
+    }
+    .mosaic-card.mc-e:hover { border-color: rgba(10,149,200,0.4); }
+
+    /* grid layout — A A B E / C D D E */
+    .mosaic-card.mc-a { grid-column: 1/3; grid-row: 1; }
+    .mosaic-card.mc-b { grid-column: 3;   grid-row: 1; }
+    .mosaic-card.mc-e { grid-column: 4;   grid-row: 1/3; }
+    .mosaic-card.mc-c { grid-column: 1;   grid-row: 2; }
+    .mosaic-card.mc-d { grid-column: 2/4; grid-row: 2; }
+
+    /* content blurs on hover */
+    .mc-content {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+      height: 100%;
+      transition: filter .3s ease, opacity .3s ease;
+    }
+    .mosaic-card:hover .mc-content {
+      filter: blur(3px);
+      opacity: .4;
+    }
+
+    /* hover overlay */
+    .mc-hover-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: rgba(2,5,10,0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      transition: opacity .3s ease;
+      z-index: 2;
+      gap: .7rem;
+    }
+    .mosaic-card:hover .mc-hover-overlay {
+      opacity: 1;
+    }
+    .ho-source {
+      font-size: .5rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--card-accent);
+      font-weight: 700;
+    }
+    .ho-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .ho-desc {
+      font-size: .63rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 280px;
+    }
+    .ho-cta {
+      font-size: .56rem;
+      color: var(--card-accent);
+      border: 1px solid var(--card-accent);
+      padding: .38rem 1rem;
+      border-radius: 4px;
+      margin-top: .3rem;
+      opacity: .8;
+      transition: opacity .2s;
+      letter-spacing: .5px;
+    }
+    .mosaic-card:hover .ho-cta { opacity: 1; }
+
+    /* card internals */
+    .mc-source {
+      font-size: .48rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      color: var(--card-accent);
+    }
+    .mc-source::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .8;
+      flex-shrink: 0;
+    }
+
+    .mc-title {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.5;
+      font-weight: 600;
+    }
+    .mc-a .mc-title { font-size: 1rem; }
+
+    .mc-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .mc-pull {
+      padding: .55rem 1rem;
+      border-left: 2px solid var(--card-accent);
+      font-size: .62rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.65;
+      opacity: .8;
+    }
+
+    .mc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+      margin-top: auto;
+      padding-top: .5rem;
+    }
+    .mc-tag {
+      font-size: .46rem;
+      color: var(--faint);
+      border: 1px solid var(--border);
+      padding: .1rem .45rem;
+      border-radius: 2px;
+      letter-spacing: .5px;
+    }
+
+    /* responsive */
+    @media(max-width:1100px){
+      .mosaic-grid { grid-template-columns: repeat(2,1fr); }
+      .mosaic-card.mc-a { grid-column:1/3; grid-row:auto; }
+      .mosaic-card.mc-b,
+      .mosaic-card.mc-c,
+      .mosaic-card.mc-d,
+      .mosaic-card.mc-e { grid-column:auto; grid-row:auto; }
+    }
+    @media(max-width:640px){
+      .mosaic-grid { grid-template-columns:1fr; }
+      .mosaic-card.mc-a { grid-column:1; }
+    }
+
     /* ══════════════════════════════
        TERMINAL
     ══════════════════════════════ */
@@ -644,6 +853,7 @@
         <li><a href="#skills" class="nav-link">Stack</a></li>
         <li><a href="#experience" class="nav-link">Work</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#writing" class="nav-link">Writing</a></li>
         <li><a href="#terminal-section" class="nav-link">Terminal</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
@@ -960,21 +1170,20 @@
             </div>
             </a>
 
-            <a class="project-card" href="https://github.com/JVSCHANDRADITHYA/PIPELINE-MODEL" target="_blank">
-            <div class="project-top">
-                <div class="project-meta"><span class="project-num">05</span><span class="project-tag ml-industrial">ML · Industrial</span></div>
-                <div class="project-title">Pipeline Multi-Dimensional Anomaly Engine</div>
-                <div class="project-desc">Real-time streaming anomaly detection for industrial pipeline sensors. Layered architecture — static filtering, peer spatial deviation, PCA compressing 150+ sensors, LSTM AE temporal modeling, adaptive thresholds.</div>
-            </div>
-            <div class="project-bottom">
+            <a class="project-card" href="https://github.com/JVSCHANDRADITHYA/buddy" target="_blank">
+              <div class="project-top">
+                <div class="project-meta"><span class="project-num">06</span><span class="project-tag infra">CLI · Systems</span></div>
+                <div class="project-title">Buddy - Video in Terminal</div>
+                <div class="project-desc">Renders video in-terminal using Unicode half-blocks + full RGB ANSI escapes. NumPy-vectorized, area-averaged downscaling. Visibly better than mpv -vo caca.</div>
+              </div>
+              <div class="project-bottom">
                 <div class="project-tech">
-                <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="">Python</span>
-                <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="">LSTM</span>
-                <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas">Pandas</span>
-                <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="Pytorch">Pytorch</span>
+                  <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="">Python</span>
+                  <span class="tech-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="">NumPy</span>
+                  <span class="tech-pill">FFmpeg</span>
                 </div>
                 <div class="project-arrow">↗</div>
-            </div>
+              </div>
             </a>
 
             <a class="project-card" href="https://github.com/JVSCHANDRADITHYA/Invoice_DB_Bot" target="_blank">
@@ -1046,6 +1255,122 @@
 
       </div>
     </section>
+
+    <section id="writing">
+  <div class="section-inner">
+    <div class="section-label fade-in">// writing</div>
+    <h2 class="fade-in">Things I've written.</h2>
+    <p class="section-sub fade-in" style="transition-delay:0.05s">Technical deep-dives, economics thought experiments, and the occasional study of how systems — human or otherwise — actually work.</p>
+
+    <div class="mosaic-grid fade-in" style="transition-delay:0.1s">
+
+      <!-- A: big feature -->
+      <a class="mosaic-card mc-a" href="https://medium.com/@adithya.jvsc/when-the-government-is-the-one-who-bought-everything-1fe98b5ee712" target="_blank" rel="noopener">
+        <div class="mc-hover-overlay">
+          <span class="ho-source">Medium · 4 min read · Oct 2025</span>
+          <div class="ho-title">When the Government is the One Who Bought Everything</div>
+          <div class="ho-desc">Why private property is an illusion nested inside public sovereignty — and what happens when you follow that logic all the way down.</div>
+          <span class="ho-cta">↗ read on Medium</span>
+        </div>
+        <div class="mc-content">
+          <span class="mc-source">Medium · Oct 2025</span>
+          <div class="mc-title">When the Government is the One Who Bought Everything</div>
+          <div class="mc-desc">Ownership is never absolute. The state underwrites every property claim — it doesn't just regulate ownership, it underwrites and can revoke it. In that sense, the government is the meta-owner of everything.</div>
+          <div class="mc-pull">"The thought experiment of one man buying the world collapses into absurdity — he'd end up reinventing government."</div>
+          <div class="mc-tags">
+            <span class="mc-tag">Government</span>
+            <span class="mc-tag">Capitalism</span>
+            <span class="mc-tag">Ownership</span>
+            <span class="mc-tag">Political Economy</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- B -->
+      <a class="mosaic-card mc-b" href="https://medium.com/@adithya.jvsc/what-happens-if-you-could-secretly-print-2%C2%B9%E2%81%B0%E2%81%B0-usd-notes-a-thought-experiment-in-economics-7da4a85add4d" target="_blank" rel="noopener">
+        <div class="mc-hover-overlay">
+          <span class="ho-source">Medium · 3 min read · Sep 2025</span>
+          <div class="ho-title">What if you printed 2¹⁰⁰ hundred-dollar bills?</div>
+          <div class="ho-desc">Even omnipotent wealth can't beat the invisible hand. The more you spend, the less your money buys.</div>
+          <span class="ho-cta">↗ read on Medium</span>
+        </div>
+        <div class="mc-content">
+          <span class="mc-source">Medium · Sep 2025</span>
+          <div class="mc-title">What Happens If You Could Secretly Print 2¹⁰⁰ Hundred-Dollar Bills?</div>
+          <div class="mc-desc">A thought experiment in economics — infinite money still can't escape the feedback loops of markets. The system pushes back harder the more you spend.</div>
+          <div class="mc-tags">
+            <span class="mc-tag">Economics</span>
+            <span class="mc-tag">Inflation</span>
+            <span class="mc-tag">Markets</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- E: cuSuite — tall right column -->
+      <a class="mosaic-card mc-e" href="https://www.linkedin.com/pulse/cusuite-install-fast-build-faster-v-s-chandradithya-janaswami-wrcpc/" target="_blank" rel="noopener">
+        <div class="mc-hover-overlay">
+          <span class="ho-source">LinkedIn · Technical Article</span>
+          <div class="ho-title">cuSuite — Install Fast, Build Faster</div>
+          <div class="ho-desc">A deep-dive into how cuSuite automates GPU, driver, CUDA, and cuDNN version resolution — cutting environment setup from hours to minutes across 30+ driver configurations. Released v1.13.9-12 on GitHub. Built because setting up CUDA on Windows is genuinely painful and nobody should have to do it manually twice.</div>
+          <span class="ho-cta">↗ read on LinkedIn</span>
+        </div>
+        <div class="mc-content">
+          <span class="mc-source">LinkedIn · Article</span>
+          <div class="mc-title">cuSuite — Install Fast, Build Faster</div>
+          <div class="mc-desc">Automated GPU, driver, and cuDNN version checks. Cut CUDA setup time by 80%. Tested across 30+ driver configurations. Released v1.13.9-12 on GitHub.</div>
+          <div class="mc-tags">
+            <span class="mc-tag">CUDA</span>
+            <span class="mc-tag">DevOps</span>
+            <span class="mc-tag">GPU</span>
+            <span class="mc-tag">Windows</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- C: Reddit -->
+      <a class="mosaic-card mc-c" href="https://www.reddit.com/r/commandline/comments/1rwydjy/i_made_a_terminal_video_ascii_player_that_uses/" target="_blank" rel="noopener">
+        <div class="mc-hover-overlay">
+          <span class="ho-source">Reddit · r/commandline</span>
+          <div class="ho-title">Terminal ASCII Video Player — True 24-bit Color</div>
+          <div class="ho-desc">Renders video directly in the terminal using true 24-bit color output — sharper and more accurate than anything else doing this.</div>
+          <span class="ho-cta">↗ view on Reddit</span>
+        </div>
+        <div class="mc-content">
+          <span class="mc-source">Reddit · r/commandline</span>
+          <div class="mc-title">Terminal ASCII Video Player with True 24-bit Color</div>
+          <div class="mc-desc">Renders video in terminal using true color. Sharper than anything else doing this.</div>
+          <div class="mc-tags">
+            <span class="mc-tag">CLI</span>
+            <span class="mc-tag">ASCII</span>
+            <span class="mc-tag">Systems</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- D: Sarvadrushti -->
+      <a class="mosaic-card mc-d" href="https://www.linkedin.com/posts/project-sarvadrushti_ai-computervision-innovation-activity-7301635137543278592-3hrP" target="_blank" rel="noopener">
+        <div class="mc-hover-overlay">
+          <span class="ho-source">LinkedIn · Project Post</span>
+          <div class="ho-title">Project Sarvadrushti — Vision Enhancement for the Field</div>
+          <div class="ho-desc">Fog, rain, and haze removal from live optical feeds built for paramilitary use. Modified CycleGAN improved robustness ~40% in low-visibility conditions — directly led to DRDO grant DFTM/034.</div>
+          <span class="ho-cta">↗ view on LinkedIn</span>
+        </div>
+        <div class="mc-content">
+          <span class="mc-source">LinkedIn · Post</span>
+          <div class="mc-title">Project Sarvadrushti — Vision Enhancement for the Field</div>
+          <div class="mc-desc">Real-time fog, rain, and haze removal from optical feeds. Built for paramilitary conditions — directly led to DRDO grant DFTM/034.</div>
+          <div class="mc-tags">
+            <span class="mc-tag">Computer Vision</span>
+            <span class="mc-tag">DRDO</span>
+            <span class="mc-tag">AI</span>
+            <span class="mc-tag">Open Source</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
 
     
 
